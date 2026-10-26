@@ -7,18 +7,13 @@
 #![allow(non_camel_case_types)]
 #![allow(clippy::large_enum_variant)]
 #![allow(clippy::type_complexity)]
-#[cfg(not(feature = "standalone_test"))]
-pub use alloc::string::String;
-#[cfg(feature = "standalone_test")]
+#[cfg(feature = "std")]
 pub use std::string::String;
 
 use core::fmt;
 use core::ops::{Deref, DerefMut};
 
-#[cfg(feature = "standalone_test")]
-use super::vec::SigmaVec;
-#[cfg(not(feature = "standalone_test"))]
-use crate::klib::vec::SigmaVec;
+use super::Vec as SigmaVec;
 
 /// Custom string type for SigmaOS with reduced dependency on predefined functions
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]

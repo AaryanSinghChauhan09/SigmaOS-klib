@@ -12,5 +12,11 @@ categories = ["no-std"]
 
 [dependencies]
 
+[features]
+default = ["std"]
+std = []
+no_std = []
+standalone_test = []
+
 [profile.release]
 opt-level = 3

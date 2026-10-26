@@ -48,6 +48,7 @@ pub mod toml;
 pub mod utf8_utils;
 pub mod uuid;
 pub mod uvm;
+pub mod vec;
 pub mod vecdeque;
 pub mod zero_dependency_elimination;
 
@@ -58,6 +59,7 @@ pub use ring_buffer::{HeapRingBuffer, RingBuffer};
 pub use slab::{SlabCache, TypedSlabCache};
 pub use uuid::Uuid;
 pub use zero_dependency_elimination::ZeroDependencyMasterHub;
+pub use vecdeque::VecDeque;
 
 /// Zero Dependency Primitive Hub
 #[derive(Debug, Clone, Copy)]
@@ -114,11 +116,6 @@ pub use collections::HashSet;
 
 pub use custom_string::SigmaString;
 
-pub mod vec {
-    pub use super::Vec;
-    pub type SigmaVec<T> = super::Vec<T>;
-}
-
 /// SigmaOS kernel library prelude.
 ///
 /// Kernel modules can use `use crate::klib::prelude::*;` to get
@@ -128,7 +125,7 @@ pub mod prelude {
     pub use super::BTreeMap;
     pub use super::HashMap;
     pub use super::HashSet;
-    pub use super::Vec;
+    pub use super::vec::Vec;
     // Linked structures
     pub use super::HeapRingBuffer;
     pub use super::LinkedList;

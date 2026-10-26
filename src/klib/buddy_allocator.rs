@@ -246,7 +246,7 @@ impl MemoryPool for SimpleBuddyAllocator {
     }
 }
 
-use crate::klib::vec::Vec;
+use crate::klib::Vec;
 
 #[cfg(test)]
 mod tests {
