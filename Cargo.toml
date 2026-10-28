@@ -17,6 +17,7 @@ default = ["std"]
 std = []
 no_std = []
 standalone_test = []
+custom_alloc_error_handler = []
 
 [profile.release]
 opt-level = 3

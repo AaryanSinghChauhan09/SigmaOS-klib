@@ -60,6 +60,7 @@ pub use slab::{SlabCache, TypedSlabCache};
 pub use uuid::Uuid;
 pub use zero_dependency_elimination::ZeroDependencyMasterHub;
 pub use vecdeque::VecDeque;
+pub use buddy_allocator::{BuddyAllocator, SimpleBuddyAllocator};
 
 /// Zero Dependency Primitive Hub
 #[derive(Debug, Clone, Copy)]

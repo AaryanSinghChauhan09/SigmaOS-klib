@@ -1,7 +1,7 @@
 //! Custom file system implementation for SigmaOS
 //! This module provides no_std alternatives to std::fs
 
-pub type c_char = i8;
+pub type CChar = i8;
 use core::fmt;
 use std::string::String;
 use std::vec::Vec;
@@ -68,6 +68,7 @@ pub struct Metadata {
 /// Custom file implementation
 pub struct SigmaFile {
     fd: RawFd,
+    #[allow(dead_code)]
     path: String,
 }
 
@@ -244,6 +245,7 @@ pub struct DirEntry {
 /// Directory reader
 pub struct SigmaDir {
     fd: RawFd,
+    #[allow(dead_code)]
     path: String,
 }
 
@@ -302,7 +304,7 @@ impl SigmaDir {
     }
 
     /// Convert C string to Rust string
-    unsafe fn cstr_to_string(ptr: *const c_char) -> String {
+    unsafe fn cstr_to_string(ptr: *const CChar) -> String {
         let mut len = 0;
         loop {
             if *ptr.add(len) == 0 {
@@ -324,7 +326,7 @@ impl Drop for SigmaDir {
 pub struct SovereignCffiBridge;
 
 impl SovereignCffiBridge {
-    pub unsafe fn cstr_to_str<'a>(ptr: *const c_char) -> Option<&'a str> {
+    pub unsafe fn cstr_to_str<'a>(ptr: *const CChar) -> Option<&'a str> {
         if ptr.is_null() {
             return None;
         }
@@ -336,13 +338,13 @@ impl SovereignCffiBridge {
         core::str::from_utf8(bytes).ok()
     }
 
-    pub fn str_to_c_buffer(s: &str, buf: &mut [c_char]) -> bool {
+    pub fn str_to_c_buffer(s: &str, buf: &mut [CChar]) -> bool {
         let bytes = s.as_bytes();
         if bytes.len() >= buf.len() {
             return false;
         }
         for (i, &b) in bytes.iter().enumerate() {
-            buf[i] = b as c_char;
+            buf[i] = b as CChar;
         }
         buf[bytes.len()] = 0;
         true
@@ -356,7 +358,7 @@ struct DirEntryRaw {
     d_off: i64,
     d_reclen: u16,
     d_type: u8,
-    d_name: [c_char; 256],
+    d_name: [CChar; 256],
 }
 
 impl Default for DirEntryRaw {
@@ -661,7 +663,7 @@ mod tests {
 
     #[test]
     fn test_sovereign_cffi_bridge() {
-        let mut buf = [0 as c_char; 16];
+        let mut buf = [0 as CChar; 16];
         assert!(SovereignCffiBridge::str_to_c_buffer("hello", &mut buf));
         let converted = unsafe { SovereignCffiBridge::cstr_to_str(buf.as_ptr()) };
         assert_eq!(converted, Some("hello"));

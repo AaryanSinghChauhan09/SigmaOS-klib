@@ -7,7 +7,9 @@ use crate::klib::SigmaString;
 
 pub struct SigmaProcess {
     pid: u32,
+    #[allow(dead_code)]
     name: SigmaString,
+    #[allow(dead_code)]
     state: ProcessState,
 }
 

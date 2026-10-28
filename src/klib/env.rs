@@ -2,7 +2,7 @@
 //! Custom environment variable access for SigmaOS
 //! Inspired by Linux & BSD distribution standards (XDG Base Directory, OpenBSD secure_getenv, FreeBSD defaults)
 
-pub type c_char = i8;
+pub type CChar = i8;
 use core::sync::atomic::{AtomicBool, Ordering};
 use std::boxed::Box;
 use std::string::FromUtf8Error as Utf8Error;
@@ -27,13 +27,13 @@ pub struct SigmaEnv;
 
 /// Environment variable iterator
 pub struct EnvIterator {
-    current: *const *const c_char,
+    current: *const *const CChar,
     index: usize,
 }
 
 /// Command line argument iterator
 pub struct ArgsIterator {
-    current: *const *const c_char,
+    current: *const *const CChar,
     index: usize,
 }
 
@@ -280,23 +280,23 @@ impl SigmaEnv {
     }
 
     /// Get the environment pointer from process ABI
-    unsafe fn get_envp_pointer() -> *const *const c_char {
+    unsafe fn get_envp_pointer() -> *const *const CChar {
         extern "C" {
-            static environ: *const *const c_char;
+            static environ: *const *const CChar;
         }
         environ
     }
 
     /// Get the argv pointer from process ABI
-    unsafe fn get_argv_pointer() -> *const *const c_char {
+    unsafe fn get_argv_pointer() -> *const *const CChar {
         extern "C" {
-            static argv: *const *const c_char;
+            static argv: *const *const CChar;
         }
         argv
     }
 
     /// Search the environment block for a key
-    unsafe fn search_env_block(envp: *const *const c_char, key: &str) -> Option<&'static str> {
+    unsafe fn search_env_block(envp: *const *const CChar, key: &str) -> Option<&'static str> {
         let mut i = 0;
         loop {
             let entry = *envp.add(i);
@@ -315,7 +315,7 @@ impl SigmaEnv {
     }
 
     /// Convert C string to Rust string
-    unsafe fn cstr_to_str(ptr: *const c_char) -> Result<&'static str, EnvError> {
+    unsafe fn cstr_to_str(ptr: *const CChar) -> Result<&'static str, EnvError> {
         if ptr.is_null() {
             return Err(EnvError::NotFound);
         }
@@ -359,7 +359,7 @@ impl SigmaEnv {
 }
 
 impl EnvIterator {
-    fn new(envp: *const *const c_char) -> Self {
+    fn new(envp: *const *const CChar) -> Self {
         Self {
             current: envp,
             index: 0,
@@ -401,7 +401,7 @@ impl Iterator for EnvIterator {
 }
 
 impl ArgsIterator {
-    fn new(argv: *const *const c_char) -> Self {
+    fn new(argv: *const *const CChar) -> Self {
         Self {
             current: argv,
             index: 0,
