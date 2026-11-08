@@ -1,23 +1,10 @@
 [package]
-name = "sigmaos-klib"
+name = "sigmaos_klib"
 version = "0.1.0"
 edition = "2021"
-authors = ["SigmaOS Project"]
-description = "Kernel library with common utilities and abstractions"
-license = "GPL-3.0-or-later"
-repository = "https://github.com/AaryanSinghChauhan09/SigmaOS-klib"
-readme = "README.md"
-keywords = ["klib", "library", "utilities"]
-categories = ["no-std"]
+license = "MIT"
+description = "SigmaOS klib component inspired by Linux Mint / Omarchy / Arch Linux."
 
-[dependencies]
-
-[features]
-default = ["std"]
-std = []
-no_std = []
-standalone_test = []
-custom_alloc_error_handler = []
-
-[profile.release]
-opt-level = 3
+[lib]
+name = "sigmaos_klib"
+path = "src/lib.rs"
