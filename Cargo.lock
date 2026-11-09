@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "sigmaos-klib"
+name = "sigmaos_klib"
 version = "0.1.0"
