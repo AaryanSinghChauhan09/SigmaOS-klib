@@ -3,12 +3,12 @@ name = "SigmaOS-klib"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "klib component"
+description = "SigmaOS Kernel Library and Core Utilities"
 upstream = []
 
 [contract]
 provides = ["component"]
-depends_on = []
+depends_on = ["SigmaOS-system"]
 
 [maturity]
 status = "Scaffold"
